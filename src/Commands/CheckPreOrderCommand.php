@@ -6,7 +6,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
-
+use App\Services\TwilioService;
 /**
  * Set command for cron to run this command on once in an hour
  * Example: 0 * * * * /bin/console app:check-preorder
@@ -33,11 +33,14 @@ class CheckPreOrderCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $preorders = $this->entityManager->getRepository("App\Entity\PreOrder")->findBy(["status" => 'waiting']);
+        $twilio_service = new TwilioService();
         foreach ($preorders as $preorder) {
             if($preorder->getDate()->getTimestamp() < strtotime("yesterday ".date("h:i:s")) ){
                 $preorder->setStatus("autoRejected");
                 $this->entityManager->persist($preorder);
                 $this->entityManager->flush();
+                $twilio_service->sendMessage($preorder->getId()." li ön siparişiniz sistem tarafından otomatik reddedildi.", 
+                        $preorder->getUser()->getPhone());
             }
         }
         
