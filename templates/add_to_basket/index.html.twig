@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sepete Ekle{% endblock %}
+
+{% block body %}
+    <div class='row' style='margin-top: 20px;'>
+        <div class='col-md-3'></div>
+        <div class='col-md-6' align='center'>
+            {{ form_start(add_to_basket_form) }}
+                {{ form_widget(add_to_basket_form.name, { 'attr' : { 'class' : 'form-control', 'value' : product.name, 'disabled': 'disabled' } } ) }}
+                {{ form_widget(add_to_basket_form.price, { 'attr' : { 'class' : 'form-control', 'value' : product.price, 'disabled' : 'disabled' } } ) }}
+                {{ form_widget(add_to_basket_form.count, { 'attr' : { 'class' : 'form-control', 'value' : 1, 'type' : 'number' } } ) }}
+                <button class="btn btn-primary w-100">Sepete Ekle</button>
+            {{ form_end(add_to_basket_form) }}
+        </div>
+    </div>
+{% endblock %}

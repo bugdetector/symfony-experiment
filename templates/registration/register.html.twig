@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    <div class='row'>
+        <div class='col-md-3'></div>
+        <div class='col-md-6' align='center'>
+            <h1>Üye Ol</h1>
+            {{ form_start(registrationForm, { 'attr': {'id' : 'registration_form'} }) }}
+                {{ form_widget(registrationForm.email, { 'attr' : { 'class' : 'form-control', 'placeholder' : registrationForm.email.vars.label } } ) }}
+                {{ form_widget(registrationForm.name, { 'attr' : { 'class' : 'form-control', 'placeholder' : registrationForm.name.vars.label } } ) }}
+                {{ form_widget(registrationForm.password.first, { 'attr' : { 'class' : 'form-control', 'placeholder' : registrationForm.password.first.vars.label } }) }}
+                {{ form_widget(registrationForm.password.second, { 'attr' : { 'class' : 'form-control', 'placeholder' : registrationForm.password.second.vars.label } }) }}
+                
+                {% if registrationForm.password.first.vars.errors%}
+                    <div class='alert-danger errors'>
+                    {{ form_errors(registrationForm.password.first) }} 
+                    </div>
+                {% endif %}
+
+                <button class="btn btn-primary w-100">Üye ol</button>
+            {{ form_end(registrationForm) }}
+        </div>
+    </div>
+{% endblock %}

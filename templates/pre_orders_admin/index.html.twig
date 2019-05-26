@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ön Siparişler{% endblock %}
+
+{% block body %}
+
+<div class="example-wrapper">
+    <h1>Ön Siparişler</h1>
+    <b>
+        <div class='row'>
+            <div class='col'> Kullanıcı adı </div>
+            <div class='col'> Tarih </div>
+            <div class='col'> Ürünler </div>
+            <div class='col'></div>
+            <div class='col'></div>
+        </div>
+    </b>
+    <hr>
+    {% for preorder in preorders %}
+        <div class='row'>
+            <div class='col'> {{preorder.user.name}} </div>
+            <div class='col'> {{preorder.date|date('Y-m-d h:i:s')}} </div>
+            <div class='col'> 
+                {% for product in preorder.products %}
+                    {{ product.name }}<br>
+                {% endfor %}
+            </div>
+            <div class='col'> <a class='btn btn-danger' href='{{path('pre_orders_admin', {'op':'remove', 'id':preorder.id} )}}' >Sil</a> </div>
+            <div class='col'> <a class='btn btn-success' href='{{path('pre_orders_admin', {'op':'approve', 'id':preorder.id} )}}'>Onayla</a> </div>
+        </div>
+        <hr>
+    {% endfor %}
+</div>
+{% endblock %}

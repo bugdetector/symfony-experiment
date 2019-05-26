@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        {% block stylesheets %}
+            <link rel='stylesheet' href='/css/bootstrap.min.css'/>
+            <link rel='stylesheet' href='/css/symfony-experiment.css'/>
+        {% endblock %}
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block javascripts %}
+            <script src='/js/jquery-3.4.1.js'></script>
+            <script src='/js/bootstrap.min.js'></script>
+        {% endblock %}
+    </head>
+    <body>
+        <header>
+            <nav class="navbar navbar-expand navbar-dark bg-dark">
+                <div class="container">
+                    <a class="navbar-brand" href="{{ path('main_page') }}">Symfony Deneyimi</a>
+                    <div class="collapse navbar-collapse">
+                        <ul class="navbar-nav mr-auto">
+                            {% set domain = app.request.getSchemeAndHttpHost() %}
+                            <li class="nav-item">
+                                <a class="nav-link {{ domain ~ path('main_page') == app.request.uri ? 'active' : '' }}" href="{{ path('main_page') }}">Anasayfa</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ domain ~ path('basket') == app.request.uri ? 'active' : '' }}" href="{{ path('basket') }}">Sepet</a>
+                            </li>
+                            {% if app.user and app.user.roles[0] == "Administrator" %}
+                            <li class="nav-item">
+                                <a class="nav-link {{ domain ~ path('pre_orders_admin') == app.request.uri ? 'active' : '' }}" href="{{ path('pre_orders_admin') }}">Ön Siparişler</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>             
+                <ul class="navbar-nav navbar-right mr-auto">
+                    {% if not app.user %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_login') }}">Oturum Aç</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_register') }}">Üye Ol</a>
+                    </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_logout') }}">Oturumu Kapat</a>
+                        </li>
+                    {% endif%}
+                </ul>
+            </nav>
+        </header>
+        <main role="main" class="container main">
+            {% for message in app.flashes('success') %}
+              <div class="alert alert-success">
+                  {{ message }}
+              </div>
+            {% endfor %}
+            {% block body %}{% endblock %}
+        </main>
+    </body>
+</html>

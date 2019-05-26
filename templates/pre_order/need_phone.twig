@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ön Sipariş{% endblock %}
+
+{% block body %}
+<h1 align='center'>Ürünler</h1>
+<div class='container'>
+    <div class='alert alert-danger'>
+        Ön sipariş verebilmek için öncelikle telefon numaranızı eklemeniz gerekmektedir.
+    </div>
+    {{ form_start(add_phone_form) }}
+    <div class='row'>
+        <div class='col-sm-2'>
+            {{ form_label(add_phone_form.phone) }}
+        </div>
+        <div class='col-sm-4 col-md-3'>
+            {{ form_widget(add_phone_form.phone, { "attr" : {'class' : 'form-control', 'placeholder' : '5xxxxxxxxx'} } ) }}
+        </div>
+        <div class='col-sm-6 col-md-7'></div>
+        <div class='col-12'>
+        {% if add_phone_form.phone.vars.errors%}
+            <div class='alert-danger errors'>
+            {{ form_errors(add_phone_form.phone) }} 
+            </div>
+        {% endif %}
+        </div>
+        <div class='col-12'>
+            <button class="btn btn-primary">Telefonu Kaydet</button>
+        </div>
+    </div>
+    {{ form_end(add_phone_form) }}
+</div>
+{% endblock %}

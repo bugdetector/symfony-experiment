@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ürünler{% endblock %}
+
+{% block body %}
+<h1 align='center'>Ürünler</h1>
+<div class='container'>
+    {% if products|length>0 %}
+    <a class='btn btn-primary form-control' href='{{ path('pre_order') }}'>Ön sipariş ver</a>
+    <b>
+    <div class='row'>
+        <div class='col'> Ürün adı </div>
+        <div class='col'>Adet </div>
+        <div class='col ml-auto'>
+        </div>
+    </div>
+    <hr>
+    </b>
+    {% endif %}
+    {% for product in products %}
+        <div class='row'>
+            <div class='col'> {{ product.name }} </div>
+            <div class='col'> {{ product.count }} Adet </div>
+            <div class='col ml-auto'>
+                <a class='btn btn-dark' href='{{ path('basket', {'op': 'remove' ,'product_id' : product.id} ) }}'>Sepetten Sil</a>
+            </div>
+        </div>
+        <hr>
+    {% endfor %}
+</div>
+{% endblock %}

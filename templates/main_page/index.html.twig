@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ürünler{% endblock %}
+
+{% block body %}
+<h1>Ürünler</h1>
+<div class='container'>
+    <b>
+        <div class='row'>
+            <div class='col'> Ürün adı </div>
+            <div class='col'> Fiyat ₺ </div>
+            <div class='col ml-auto'>
+            </div>
+        </div>
+        <hr>
+    </b>
+    {% for product in products %}
+        <div class='row'>
+            <div class='col'> {{ product.name}} </div>
+            <div class='col'> {{ product.price}} ₺ </div>
+            <div class='col ml-auto'>
+                <a class='btn btn-dark' href='{{ path('add_to_basket', {'product_id' : product.id} ) }}'>Sepete Ekle</a>
+            </div>
+        </div>
+        <hr>
+    {% endfor %}
+</div>
+{% endblock %}
